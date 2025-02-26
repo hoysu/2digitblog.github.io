@@ -387,7 +387,7 @@
             <li><strong>Site</strong> includes the names of various banks and financial institutions that provide exchange rate predictions.</li>
             <li><strong>Time</strong> indicates the period during which the predictions were made and serves as the evaluation criterion for the exchange rate prediction performance during that period.</li>
             <li><strong>USD MAPE(high, low)</strong> represents the average MAPE value for January 2025, calculated by averaging the MAPE values for both High and Low predictions.</li>
-            <li>The individual date columns contain the MAPE values calculated for each specific date, and the final <strong>USD MAPE(high, low)</strong> value is derived by averaging these values.</li>
+<!--             <li>The individual date columns contain the MAPE values calculated for each specific date, and the final <strong>USD MAPE(high, low)</strong> value is derived by averaging these values.</li> -->
           </ul>
           
           <table class="table is-bordered is-striped is-hoverable">
@@ -463,10 +463,9 @@
           <p>
             To address this issue and evaluate KRW-based exchange rate predictions, a method was applied where the exchange rates were converted based on the previous trading day's closing price, and the collected prediction values were compared. The following formula was used for the exchange rate conversion.
           </p>
-          <img src="./static/images/interpolate_start.jpg"
-               class="interpolation-image"
-               alt="Interpolate start reference image."/>
-
+          <img src="./static/images/calculate_global_currencies.jpg"/>
+<!--                class="interpolation-image"
+               alt="Interpolate start reference image."/> -->
           <ul>
             <li><strong>Rank</strong> indicates the prediction accuracy ranking of each `Site` (bank or financial institution) based on the MAPE value.</li>
             <li><strong>Site</strong> lists the names of various banks and financial institutions that provide exchange rate predictions.</li>
@@ -576,72 +575,18 @@
                 <th>Site</th>
                 <th>Time</th>
                 <th>USD MAPE(high,low)</th>
-                <th>1/2</th>
-                <th>1/3</th>
-                <th>1/6</th>
-                <th>1/7</th>
-                <th>1/8</th>
-                <th>1/9</th>
-                <th>1/10</th>
-                <th>1/13</th>
-                <th>1/14</th>
-                <th>1/15</th>
-                <th>1/16</th>
-                <th>1/17</th>
-                <th>1/20</th>
-                <th>1/21</th>
-                <th>1/22</th>
-                <th>1/23</th>
-                <th>1/24</th>
-                <th>1/31</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Exchange</strong></td>
+                <td>Exchange</td>
                 <td>00-24</td>
                 <td>0.38</td>
-                <td>0.20</td>
-                <td>0.14</td>
-                <td>0.64</td>
-                <td>0.21</td>
-                <td>0.92</td>
-                <td>0.20</td>
-                <td>0.83</td>
-                <td>0.22</td>
-                <td>0.12</td>
-                <td>0.08</td>
-                <td>0.46</td>
-                <td>0.32</td>
-                <td>0.50</td>
-                <td>0.56</td>
-                <td>0.32</td>
-                <td>0.47</td>
-                <td>0.20</td>
-                <td>0.50</td>
               </tr>
               <tr>
-                <td><strong>Exchange-Price</strong></td>
+                <td>Exchange-Price</td>
                 <td>00-24</td>
                 <td>0.31</td>
-                <td>0.21</td>
-                <td>0.26</td>
-                <td>0.53</td>
-                <td>0.60</td>
-                <td>0.28</td>
-                <td>0.25</td>
-                <td>0.54</td>
-                <td>0.40</td>
-                <td>0.26</td>
-                <td>0.06</td>
-                <td>0.26</td>
-                <td>0.07</td>
-                <td>0.87</td>
-                <td>0.03</td>
-                <td>0.19</td>
-                <td>0.19</td>
-                <td>0.55</td>
-                <td>0.11</td>
               </tr>
             </tbody>
           </table>
@@ -660,13 +605,13 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>Exchange</strong></td>
+                <td>Exchange</td>
                 <td>00-24</td>
                 <td>0.30</td>
                 <td>0.55</td>
               </tr>
               <tr>
-                <td><strong>Exchange-Price</strong></td>
+                <td>Exchange-Price</td>
                 <td>00-24</td>
                 <td>0.23</td>
                 <td>0.42</td>
@@ -941,29 +886,38 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-left">Usage</h2>
+        <h2 class="title is-3 has-text-left">Model Outputs</h2>
         
         <div class="content has-text-justified">
-          <p>
-            The following explains what data is used by the Exchange and Exchange-Price models, and the flow of execution.
-          </p>
-          <p>
-            When the <storng>prompt</storng>, <strong>exchange rate data</strong>, <strong>key forex market-related data</strong>, and <strong>summarized daily forex market and global economic news</strong> are input into the models, the <strong>Exchange model</strong> outputs a report that includes market analysis explanations and exchange rate predictions, while the <strong>Exchange-Price model</strong> outputs the exchange rate prediction results. Below, you can see the actual output results from the models.
-          </p>
-        </div>
-
-        <div class="content has-text-justified">
           <h4 class="title is-5">Exchange Model</h4>
-          <img src="./static/images/interpolate_start.jpg"
-            class="interpolation-image"
-            alt="Interpolate start reference image."/>
+          <p>### 분석</p>
+          <ol>
+            <li><strong>달러 강세 유지</strong>: 미국의 경제 지표가 강세를 유지하고 있으며, 서비스업 및 고용 지표는 특히 긍정적인 영향을 미쳤습니다. 이는 달러 강세를 뒷받침하는 주요 요인입니다. 또한, 글로벌 주요 통화 대비 달러의 상대적 강세가 지속되고 있습니다.</li>
+            <li><strong>국내외 경제 불확실성 확대</strong>: 한국 정치적 불안과 국제적 트럼프 관세 정책 변화 등이 원화 약세를 심화시키고 있으며, 이는 환율 상승 압력으로 작용하고 있습니다. 한편, 미국 경제의 상대적 안정성과 성장 기대감이 달러 가치에 추가적인 상승력을 부여합니다.</li>
+            <li><strong>외국인 투자 증가 및 코스피 상승</strong>: 외국인과 기관의 매수세가 증가하면서 코스피는 안정적인 상승세를 유지하고 있습니다. 이는 환율 하락 압력으로 작용할 가능성이 있습니다.</li>
+            <li><strong>원유와 금 가격 상승</strong>: 국제 원유와 금 가격이 상승세를 보이며 안전 자산으로서의 투자자 신뢰도를 확대하고 있습니다. 이는 글로벌 경제 불확실성이 높아짐에 따라 안전 자산 선호가 강화된 요인으로 해석됩니다.</li>
+            <li><strong>S&P500 변동성</strong>: 미국 경제의 고용 및 서비스 지표가 호조를 보이며 S&P500은 변동성을 나타내고 있습니다. 기술주 및 반도체 업종의 상승이 시장 흐름을 주도하는 주요 요인입니다.</li>
+            <li><strong>유가와 원화 상승폭 연계</strong>: 원유 가격 상승과 연준의 금리 인상 기대감이 환율에 추가적인 상승 요인을 제공할 가능성이 있습니다.</li>
+            <li><strong>환율 변동성 제한 요인</strong>: 국내에서 대규모 환헤지와 외환당국의 개입 가능성이 환율 변동성을 제한하고 있습니다. 그러나 국제적인 경제 불확실성과 외환시장 흐름은 이에 맞물려 달러 환율 상승 압력을 유지하고 있습니다.</li>
+          </ol>
+          <p>### 예측</p>
+          <p>2025년 1월 9일 USD 환율은 미국 경제의 강한 지표와 달러 강세 흐름, 그리고 국내외 불확실성이 상존하는 가운데, 변동성이 유지될 가능성이 있습니다. 다만, 외국인과 기관 투자자들의 매수세와 국내 환헤지 움직임이 환율 하락 요인을 제공할 것입니다. 이에 따라, USD/원 환율은 전일 종가(1462) 대비 소폭 하락세를 보이며, 종가가 <strong>1453.21원</strong>에 마감할 것으로 예측됩니다.</p>
+          <pre>
+            <code>
+              date,Open,High,Low,Close
+              2025-01-09,1462.0,1463.51,1450.3,1453.21
+            </code>
+          </pre>
         </div>
-
+        
         <div class="content has-text-justified">
           <h4 class="title is-5">Exchange-Price Model</h4>
-          <img src="./static/images/interpolate_start.jpg"
-            class="interpolation-image"
-            alt="Interpolate start reference image."/>
+          <pre>
+            <code>
+              date,Open,High,Low,Close
+              2025-01-09,1462.0,1463.51,1450.3,1453.21
+            </code>
+          </pre>
         </div>
       
       </div>
@@ -1051,5 +1005,6 @@
   </div>
 </footer>
 
+  
 </body>
 </html>
