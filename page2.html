@@ -273,7 +273,504 @@
           <p>
             For training, we used responses from various models to Ko-Bench questions, evaluated using GPT-4o. The response generation and evaluation process followed the methodology of <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a>. Since language inconsistency errors were relatively rare in the original data, we supplemented the dataset by prompting the response-generation models to produce English answers or responses that mixed foreign-language characters.
           </p>
+          <img src="./static/images/keval(ko-bench)1.jpg"/>
+          <img src="./static/images/keval(ko-bench)2.jpg"/>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">kgrammar</h4>
+          <p>
+            The goal of kgrammar is to identify grammatical errors in a given Korean text and output the number of detected errors. Similar to keval, it detects foreign language usage within a Korean response as an error. However, kgrammar does not assess the accuracy or usefulness of the response.
+          </p>
+          <p>
+            Training the kgrammar model requires input documents containing errors and corresponding error analysis results. The training data was generated using GPT-4o.
+          </p>
+          <p>
+            To generate error-containing documents, we used the following prompt to introduce errors into responses when given a question. The dataset consists of 50% general questions, 25% math-related questions, and 25% coding-related questions to ensure that mathematical expressions and code are not mistakenly detected as errors.
+          </p>
+          <img src="./static/images/k.jpg"/>
           
+          <p>
+            After generating error-containing documents, we apply the following prompt to analyze errors in each document and output the number of detected errors.
+          </p>
+          <img src="./static/images/kjpg"/>
+          
+          <p>
+            The format of the generated error-containing documents and the error analysis results are as follows.
+          </p>
+          <img src="./static/images/kjpg"/>
+
+          <p>
+            The final format of the kgrammar dataset used for model training is as follows. The error analysis sentence format was modified to match the prompt.
+          </p>
+          <img src="./static/images/kjpg"/>
+        </div>
+
+        <div class="content has-text-justified">
+          <h3 class="title is-4 has-text-left">Fine-Tuning</h3>
+          <p>
+            The development of keval utilized both Supervised Fine-Tuning (SFT) and Direct Preference Optimization (DPO) techniques.
+          </p>
+          <p>
+            SFT is a method that trains a model using labeled data, enabling it to learn correct responses for given inputs and improve its performance on specific tasks. keval underwent additional training through SFT using a Korean evaluation dataset, enhancing its evaluation capabilities.
+          </p>
+          <p>
+            DPO is a technique that improves model responses by learning user preferences. Instead of merely learning correct answers, DPO incorporates preference learning through relative comparisons between responses. By applying DPO, keval was optimized to make better judgments, leading to improved evaluation accuracy.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+    
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-left">Evaluation</h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            The evaluation dataset consists of 22 samples, with two samples selected for each score from 0 to 10 in the training data. The keval model was assessed using two key metrics: Diff and Accuracy. keval was developed in three different sizes—1B, 3B, and 9B—and even the smaller models (1B and 3B) demonstrated performance comparable to the 9B model.
+          </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <h3 class="title is-4 has-text-left">keval</h3>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">Diff</h4>
+          <p>
+            <strong>Diff</strong> is a metric that represents the difference between the labeled score and the predicted score. <strong>wrong</strong> indicates the number of incorrectly formatted responses. <strong>length</strong> refers to the total number of test data points.
+          </p>
+          <ul>
+            The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.<li>The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.</li>
+          </ul>
+          <p>
+            The <strong>score</strong> is calculated as follows:
+          </p>
+          <ol>
+              <li>Compute the difference between the <strong>Ko-Bench label score</strong> and the <strong>predicted score</strong> for each sample.</li>
+              <li>Assign points based on the difference:
+                  <ul>
+                      <li><strong>Difference = 0</strong> → <strong>1 point</strong></li>
+                      <li><strong>Difference = 1</strong> → <strong>0.5 points</strong></li>
+                      <li><strong>Difference ≥ 2</strong> → <strong>0 points</strong></li>
+                  </ul>
+              </li>
+              <li>Compute the final score as:
+                  <pre>score = (total points) / length</pre>
+              </li>
+          </ol>
+          <table class="table is-bordered is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>model</th>
+                <th>wrong</th>
+                <th>score</th>
+                <th>length</th>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>keval-2-9b</td>
+                <td>0 (0.0%)</td>
+                <td>61.4%</td>
+                <td>22</td>
+                <td>11 (50.0%)</td>
+                <td>5 (22.7%)</td>
+                <td>2 (9.1%)</td>
+                <td>3 (13.6%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1 (4.5%)</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>keval-2-3b</td>
+                <td>0 (0.0%)</td>
+                <td>59.1%</td>
+                <td>22</td>
+                <td>10 (45.5%)</td>
+                <td>6 (27.3%)</td>
+                <td>4 (18.2%)</td>
+                <td>2 (9.1%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>keval-2-1b</td>
+                <td>0 (0.0%)</td>
+                <td>43.2%</td>
+                <td>22</td>
+                <td>8 (36.4%)</td>
+                <td>3 (13.6%)</td>
+                <td>5 (22.7%)</td>
+                <td>2 (9.1%)</td>
+                <td>1 (4.5%)</td>
+                <td>0</td>
+                <td>1 (4.5%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2 (9.1%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">Accuracy</h4>
+          <p>
+            The <strong>score</strong> column represents the proportion of correctly predicted labels, calculated as the number of correct predictions divided by the total dataset size.
+          </p>
+          <p>
+            The <strong>wrong</strong> column indicates the number and proportion of responses with incorrect formatting.
+          </p>
+          <ul>
+            <li>The columns labeled "0" to "10" correspond to Ko-Bench scores, with each value representing the count and percentage of correctly predicted scores for that label.</li>
+          </ul>
+          
+          <table class="table is-bordered is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>model</th>
+                <th>wrong</th>
+                <th>score</th>
+                <th>length</th>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>keval-2-9b</td>
+                <td>0 (0.0%)</td>
+                <td>50.0%</td>
+                <td>22</td>
+                <td>1 (50.0%)</td>
+                <td>1 (50.0%)</td>
+                <td>2 (100.0%)</td>
+                <td>0</td>
+                <td>2 (100.0%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>1 (50.0%)</td>
+                <td>1 (50.0%)</td>
+                <td>2 (100.0%)</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>keval-2-3b</td>
+                <td>0 (0.0%)</td>
+                <td>45.5%</td>
+                <td>22</td>
+                <td>2 (100.0%)</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2 (100.0%)</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>2 (100.0%)</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>keval-2-1b</td>
+                <td>0 (0.0%)</td>
+                <td>36.4%</td>
+                <td>22</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>2 (100.0%)</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>2 (100.0%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content has-text-justified">
+            <h3 class="title is-4 has-text-left">kgrammar</h3>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">Diff</h4>
+          <p>
+            The <strong>diff</strong> refers to the difference between the label scores and predicted scores, represented as a score. The <strong>wrong</strong> count refers to the number of incorrect answers that do not match the required format, while <strong>length</strong> represents the total number of test data. Other columns containing numbers indicate the count and percentage of differences between label and predicted scores for each value.
+          </p>
+          <p>
+            The <strong>score</strong> is calculated by:
+          </p>
+          <ol>
+              <li>Calculating the difference between the label and predicted value inside the <wrong count> tag for each pair.</li>
+              <li>Assigning full points for a difference of 0, and half a point for a difference of 1.</li>
+              <li>The total score is the sum of all points divided by the number of data points.</li>
+          </ol>
+          <table class="table is-bordered is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>model</th>
+                <th>wrong</th>
+                <th>score</th>
+                <th>length</th>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>kgrammar-2-9b</td>
+                <td>0 (0.0%)</td>
+                <td>80.0%</td>
+                <td>80</td>
+                <td>54 (67.5%)</td>
+                <td>20 (25.0%)</td>
+                <td>4 (5.0%)</td>
+                <td>1 (1.2%)</td>
+                <td>0</td>
+                <td>1 (1.2%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>kgrammar-2-3b</td>
+                <td>0 (0.0%)</td>
+                <td>76.2%</td>
+                <td>80</td>
+                <td>52 (65.0%)</td>
+                <td>18 (22.5%)</td>
+                <td>5 (6.2%)</td>
+                <td>2 (2.5%)</td>
+                <td>1 (1.2%)</td>
+                <td>1 (1.2%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1 (1.2%)</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>kgrammar-2-1b</td>
+                <td>1 (1.2%)</td>
+                <td>71.9%</td>
+                <td>80</td>
+                <td>50 (62.5%)</td>
+                <td>15 (18.8%)</td>
+                <td>6 (7.5%)</td>
+                <td>5 (6.2%)</td>
+                <td>0</td>
+                <td>2 (2.5%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1 (1.2%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">Accuracy</h4>
+          <p>
+            The <strong>score</strong> column represents the ratio of correctly predicted labels to the total number of data points. The <strong>wrong</strong> column shows the count and percentage of incorrectly formatted answers.
+          </p>
+          <ul>
+            <li>The columns labeled "0" through "10" represent the number and percentage of correct predictions for each label, based on how well the model predicted each specific label.</li>
+          </ul>
+          
+          <table class="table is-bordered is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>model</th>
+                <th>wrong</th>
+                <th>score</th>
+                <th>length</th>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>kgrammar-2-9b</td>
+                <td>0 (0.0%)</td>
+                <td>67.5%</td>
+                <td>80</td>
+                <td>35 (97.2%)</td>
+                <td>6 (66.7%)</td>
+                <td>8 (53.3%)</td>
+                <td>1 (33.3%)</td>
+                <td>4 (44.4%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>kgrammar-2-3b</td>
+                <td>0 (0.0%)</td>
+                <td>65.0%</td>
+                <td>80</td>
+                <td>35 (97.2%)</td>
+                <td>2 (22.2%)</td>
+                <td>8 (53.3%)</td>
+                <td>1 (33.3%)</td>
+                <td>3 (33.3%)</td>
+                <td>1 (100.0%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>1 (100.0%)</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>kgrammar-2-1b</td>
+                <td>1 (1.2%)</td>
+                <td>62.5%</td>
+                <td>80</td>
+                <td>34 (94.4%)</td>
+                <td>5 (55.6%)</td>
+                <td>6 (40.0%)</td>
+                <td>1 (33.3%)</td>
+                <td>2 (22.2%)</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>1 (50.0%)</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">Error Detection Accuracy</h4>
+          <p>
+            This accuracy metric evaluates a model's error detection performance by measuring how well it identifies the presence or absence of errors. It differs from conventional accuracy by focusing on correct and incorrect error predictions rather than overall classification correctness.
+          </p>
+          
+          <table class="table is-bordered is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>model</th>
+                <th>score</th>
+                <th>wrong</th>
+                <th>length</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>kgrammar-2-9b</td>
+                <td>95%</td>
+                <td>0</td>
+                <td>80</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>kgrammar-2-3b</td>
+                <td>93.8%</td>
+                <td>0</td>
+                <td>80</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>kgrammar-2-1b</td>
+                <td>93.7%</td>
+                <td>1</td>
+                <td>79</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       </div>
@@ -290,16 +787,7 @@
         
         <div class="content has-text-justified">
           <p>
-            The Exchange and Exchange-Price models, built on the generative AI model Llama 3.1 8B, would bring a highly innovative introduction of Generative AI to the financial market if applied to the real-world financial industry. Since the models use integrated time-series datasets during training, it maximizes the efficiency of model training and inference, enabling fast learning and achieving the following effects:
-          </p>
-          <p>
-            Unlike traditional services that rely on past experiences and are limited in volatile environments, the LLM-based AI forex trader can analyze vast global data in real-time with high data analysis capabilities and make precise predictions. Furthermore, it provides user-friendly financial services by explaining predictions in a way that even non-experts can easily understand.
-          </p>
-          <p>
-            Being an AI-based service rather than human-based, it can be automated and operated 24/7, providing financial information whenever users need it, anywhere. The model can quickly adapt to market volatility by learning various patterns and swiftly capturing changes in real-time data regarding exchange rate fluctuations through multiple leading indicators.
-          </p>
-          <p>
-            The model has also demonstrated performance that surpasses traditional human-based predictions in evaluation metrics, making the <strong>Exchange</strong> and <strong>Exchange-Price</strong> models highly applicable and valuable.
+            keval is a Korean AI evaluation model capable of correctly assessing the quality of model responses. It can not only be used to improve the performance of Korean language models but also helps save time and costs through an automated process. Particularly, keval, optimized for evaluating Korean language models, will contribute to the advancement of Korean AI technology.
           </p>
         </div>
 
@@ -317,20 +805,17 @@
 
         <div class="content has-text-justified">
           <ul>
-            <li>[1] <a href="https://huggingface.co/meta-llama/Llama-3.1-8B">meta-llama/Llama-3.1-8B (Model)</a></li>
-            <li>[2] <a href="https://huggingface.co/davidkim205/exchange">davidkim205/exchange (Model)</a></li>
-            <li>[3] <a href="https://huggingface.co/davidkim205/exchange-price">davidkim205/exchange-price (Model)</a></li>
+            <li>[1] <a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a></li>
+            <li>[2] <a href="https://github.com/lm-sys/FastChat/blob/main/fastchat/llm_judge/data/mt_bench/question.jsonl">MT-Bench</a></li>
+            <li>[3] <a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a></li>
+            <li>[4] <a href="https://huggingface.co/google/gemma-2-9b-it">google/gemma-2-9b-it(Model)</a></li>
+            <li>[5] <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">Gemma 9B Evaluation(Table 13)</a></li>
+            <li>[6] <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench Repository</a></li>
+            <li>[7] <a href="https://huggingface.co/davidkim205/keval-2-9b">davidkim205/keval-2-9b(Model)</a></li>
+            <li>[8] <a href="https://huggingface.co/davidkim205/kgrammar-2-9b">davidkim205/kgrammar-2-9b(Model)</a></li>
           </ul>
         </div>
         
-<!--         <div class="content has-text-justified">
-          <ul>
-            <li><strong>[1]</strong> meta-llama/Llama-3.1-8B(Model): <a href="https://huggingface.co/meta-llama/Llama-3.1-8B"></li>
-            <li><strong>[2]</strong> davidkim205/exchange(Model): https://huggingface.co/davidkim205/exchange</li>
-            <li><strong>[3]</strong> davidkim205/exchange-price(Model): https://huggingface.co/davidkim205/exchange-price</li>
-          </ul>
-        </div> -->
-
       </div>
     </div>
   </div>
