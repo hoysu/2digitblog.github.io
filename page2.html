@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>keval: Korean AI Evaluation Model</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];c
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon">
+  <!--   <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://hoysu.github.io/2digitblog.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+<!--           <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a> -->
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">keval: Korean AI Evaluation Model</h1>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a>David Kim</a><sup>1</sup>,</span>
+<!--               <a href="https://keunhong.com">David Kim</a><sup>1</sup>,</span> -->
+            <span class="author-block">
+              <a>Hailey Lim</a><sup>2</sup>,</span>
+<!--               <a href="https://utkarshsinha.com">Hailey Lim</a><sup>2</sup>,</span> -->
+            <span class="author-block">
+              <a>Eric Jung</a><sup>2</sup>,</span>
+<!--               <a href="https://jonbarron.info">Eric Jung</a><sup>2</sup>, -->
+            </span>
+            <span class="author-block">
+              <a>Sierra Ho</a><sup>2</sup></span>
+<!--               <a href="http://sofienbouaziz.com">Sierra Ho</a><sup>2</sup>, -->
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>2Digit AI Research</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+<!--                 <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a> -->
+              </span>
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+<!--               <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            keval is a Korean AI evaluation model fine-tuned from Google's Gemma-2-9b-it model. Despite its small size, keval demonstrates outstanding Korean AI evaluation capabilities. In particular, keval has been trained with a Korean-specialized dataset, enhancing its understanding of the language and allowing for more accurate assessments.
+          </p>
+          <p>
+            In this article, we will explore the entire process of creating the <strong></strong>**keval** model, from its introduction to how it can be used for evaluating Korean AI models.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-left">Korean AI Evaluation and keval</h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            AI model evaluation has traditionally relied on benchmarks composed of question-answer pairs from specific domains, such as ARC and Hellaswag. However, benchmark scores often fail to fully reflect human preference for AI-generated responses. On the other hand, manual evaluation by humans is time-consuming and expensive.
+          </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Additionally, evaluating Korean language models presents extra challenges compared to other languages. Most publicly available benchmarks are designed in English, and there is a severe lack of Korean-specific benchmarks. While translating English datasets into Korean is an option, simple translation does not adequately capture the unique characteristics of the Korean language.
+          </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            keval overcomes these limitations by evaluating models using the <a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a> approach with the <a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a> dataset.
+          </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            LLM-as-a-Judge is an effective evaluation method that leverages LLMs to assess AI models. It is significantly more efficient in terms of time and cost compared to human evaluation, while also allowing for a more comprehensive assessment of AI capabilities beyond what traditional benchmarks offer.
+          </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Ko-Bench is a dataset that adapts <a href="https://github.com/lm-sys/FastChat/blob/main/fastchat/llm_judge/data/mt_bench/question.jsonl">MT-Bench</a> to better align with the characteristics of the Korean language. By incorporating Korean linguistic, cultural, and geographical contexts, Ko-Bench enables a more precise evaluation of an AI model’s understanding and generation capabilities in Korean.
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-left">keval and kgrammar</h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            When evaluating AI's responses, it's important not only to assess whether the answer is appropriate, accurate, and useful for the question, but also to check if it is grammatically correct. In keval, these two tasks are handled by two separate models:
+          </p>
+          <ul>
+            <li><strong>keval</strong>: A model that scores whether the answer is appropriate for the question.</li>
+            <li><strong>kgrammar</strong>: A model that detects grammatical errors in the answer.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        
+        <h2 class="title is-3 has-text-left">Training</h2>
+        <div class="content has-text-justified">
+          <p>
+            keval models are built upon Google's <a href="https://huggingface.co/google/gemma-2-9b-it">Gemma-2-9b-it</a>.
+          </p>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Gemma-2 was chosen for its strong performance in text generation tasks and its commercial potential, thanks to its commercially-friendly license that allows for the sharing of innovations and the commercialization of AI models. These models are particularly well-suited for a variety of tasks, including question answering, summarization, and reasoning. Among the Gemma-2 models, the 9B model demonstrates <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">exceptional performance</a> compared to other models of similar size. Their relatively small size enhances their versatility, making them ideal for deployment in resource-constrained environments such as laptops, desktops, or even cloud-based systems.
+          </p>
+        </div>
+
+        <h3 class="title is-4 has-text-left">Dataset</h3>
+        <h4 class="title is-5 has-text-left">keval (Ko-Bench)</h4>
+        <div class="content has-text-justified">
+          <p>
+            While AI models rarely respond in Korean to English questions, they occasionally answer in English when given Korean prompts. Sometimes, a response appears to be in Korean but contains a single foreign-language word. To prevent models from mistakenly receiving high scores despite such language inconsistencies, Ko-Bench introduces a 0-point score in addition to the 1-10 scale used in MT-Bench.
+          </p>
+          <p>
+            For training, we used responses from various models to Ko-Bench questions, evaluated using GPT-4o. The response generation and evaluation process followed the methodology of <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a>. Since language inconsistency errors were relatively rare in the original data, we supplemented the dataset by prompting the response-generation models to produce English answers or responses that mixed foreign-language characters.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+  
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-left">Conclusion</h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            The Exchange and Exchange-Price models, built on the generative AI model Llama 3.1 8B, would bring a highly innovative introduction of Generative AI to the financial market if applied to the real-world financial industry. Since the models use integrated time-series datasets during training, it maximizes the efficiency of model training and inference, enabling fast learning and achieving the following effects:
+          </p>
+          <p>
+            Unlike traditional services that rely on past experiences and are limited in volatile environments, the LLM-based AI forex trader can analyze vast global data in real-time with high data analysis capabilities and make precise predictions. Furthermore, it provides user-friendly financial services by explaining predictions in a way that even non-experts can easily understand.
+          </p>
+          <p>
+            Being an AI-based service rather than human-based, it can be automated and operated 24/7, providing financial information whenever users need it, anywhere. The model can quickly adapt to market volatility by learning various patterns and swiftly capturing changes in real-time data regarding exchange rate fluctuations through multiple leading indicators.
+          </p>
+          <p>
+            The model has also demonstrated performance that surpasses traditional human-based predictions in evaluation metrics, making the <strong>Exchange</strong> and <strong>Exchange-Price</strong> models highly applicable and valuable.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-left">References</h2>
+
+        <div class="content has-text-justified">
+          <ul>
+            <li>[1] <a href="https://huggingface.co/meta-llama/Llama-3.1-8B">meta-llama/Llama-3.1-8B (Model)</a></li>
+            <li>[2] <a href="https://huggingface.co/davidkim205/exchange">davidkim205/exchange (Model)</a></li>
+            <li>[3] <a href="https://huggingface.co/davidkim205/exchange-price">davidkim205/exchange-price (Model)</a></li>
+          </ul>
+        </div>
+        
+<!--         <div class="content has-text-justified">
+          <ul>
+            <li><strong>[1]</strong> meta-llama/Llama-3.1-8B(Model): <a href="https://huggingface.co/meta-llama/Llama-3.1-8B"></li>
+            <li><strong>[2]</strong> davidkim205/exchange(Model): https://huggingface.co/davidkim205/exchange</li>
+            <li><strong>[3]</strong> davidkim205/exchange-price(Model): https://huggingface.co/davidkim205/exchange-price</li>
+          </ul>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+</body>
+</html>
