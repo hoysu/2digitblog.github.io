@@ -185,7 +185,7 @@
             keval is a Korean AI evaluation model fine-tuned from Google's Gemma-2-9b-it model. Despite its small size, keval demonstrates outstanding Korean AI evaluation capabilities. In particular, keval has been trained with a Korean-specialized dataset, enhancing its understanding of the language and allowing for more accurate assessments.
           </p>
           <p>
-            In this article, we will explore the entire process of creating the <strong></strong>**keval** model, from its introduction to how it can be used for evaluating Korean AI models.
+            In this article, we will explore the entire process of creating the <strong>keval</strong> model, from its introduction to how it can be used for evaluating Korean AI models.
           </p>
         </div>
       </div>
@@ -204,30 +204,18 @@
           <p>
             AI model evaluation has traditionally relied on benchmarks composed of question-answer pairs from specific domains, such as ARC and Hellaswag. However, benchmark scores often fail to fully reflect human preference for AI-generated responses. On the other hand, manual evaluation by humans is time-consuming and expensive.
           </p>
-        </div>
-
-        <div class="content has-text-justified">
           <p>
             Additionally, evaluating Korean language models presents extra challenges compared to other languages. Most publicly available benchmarks are designed in English, and there is a severe lack of Korean-specific benchmarks. While translating English datasets into Korean is an option, simple translation does not adequately capture the unique characteristics of the Korean language.
           </p>
-        </div>
-
-        <div class="content has-text-justified">
           <p>
             keval overcomes these limitations by evaluating models using the <a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a> approach with the <a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a> dataset.
           </p>
-        </div>
-
-        <div class="content has-text-justified">
           <p>
             LLM-as-a-Judge is an effective evaluation method that leverages LLMs to assess AI models. It is significantly more efficient in terms of time and cost compared to human evaluation, while also allowing for a more comprehensive assessment of AI capabilities beyond what traditional benchmarks offer.
           </p>
-        </div>
-
-        <div class="content has-text-justified">
           <p>
             Ko-Bench is a dataset that adapts <a href="https://github.com/lm-sys/FastChat/blob/main/fastchat/llm_judge/data/mt_bench/question.jsonl">MT-Bench</a> to better align with the characteristics of the Korean language. By incorporating Korean linguistic, cultural, and geographical contexts, Ko-Bench enables a more precise evaluation of an AI model’s understanding and generation capabilities in Korean.
-          </p>
+          </p>         
         </div>
         
       </div>
@@ -262,28 +250,30 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        
         <h2 class="title is-3 has-text-left">Training</h2>
+        
         <div class="content has-text-justified">
           <p>
             keval models are built upon Google's <a href="https://huggingface.co/google/gemma-2-9b-it">Gemma-2-9b-it</a>.
           </p>
-        </div>
-        <div class="content has-text-justified">
           <p>
             Gemma-2 was chosen for its strong performance in text generation tasks and its commercial potential, thanks to its commercially-friendly license that allows for the sharing of innovations and the commercialization of AI models. These models are particularly well-suited for a variety of tasks, including question answering, summarization, and reasoning. Among the Gemma-2 models, the 9B model demonstrates <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">exceptional performance</a> compared to other models of similar size. Their relatively small size enhances their versatility, making them ideal for deployment in resource-constrained environments such as laptops, desktops, or even cloud-based systems.
           </p>
         </div>
 
-        <h3 class="title is-4 has-text-left">Dataset</h3>
-        <h4 class="title is-5 has-text-left">keval (Ko-Bench)</h4>
         <div class="content has-text-justified">
+          <h3 class="title is-4 has-text-left">Dataset</h3>
+        </div>
+
+        <div class="content has-text-justified">
+          <h4 class="title is-5 has-text-left">keval (Ko-Bench)</h4>
           <p>
             While AI models rarely respond in Korean to English questions, they occasionally answer in English when given Korean prompts. Sometimes, a response appears to be in Korean but contains a single foreign-language word. To prevent models from mistakenly receiving high scores despite such language inconsistencies, Ko-Bench introduces a 0-point score in addition to the 1-10 scale used in MT-Bench.
           </p>
           <p>
             For training, we used responses from various models to Ko-Bench questions, evaluated using GPT-4o. The response generation and evaluation process followed the methodology of <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a>. Since language inconsistency errors were relatively rare in the original data, we supplemented the dataset by prompting the response-generation models to produce English answers or responses that mixed foreign-language characters.
           </p>
+          
         </div>
 
       </div>
