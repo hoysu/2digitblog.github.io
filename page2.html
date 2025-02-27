@@ -363,16 +363,6 @@
           </pre>
         </div>
 
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
         <div class="content has-text-justified">
           <h3 class="title is-4 has-text-left">Fine-Tuning</h3>
           <p>
@@ -385,6 +375,7 @@
             DPO is a technique that improves model responses by learning user preferences. Instead of merely learning correct answers, DPO incorporates preference learning through relative comparisons between responses. By applying DPO, keval was optimized to make better judgments, leading to improved evaluation accuracy.
           </p>
         </div>
+
       </div>
     </div>
   </div>
@@ -410,10 +401,16 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Diff</h4>
           <p>
-            <strong>Diff</strong> is a metric that represents the difference between the labeled score and the predicted score. <strong>wrong</strong> indicates the number of incorrectly formatted responses. <strong>length</strong> refers to the total number of test data points.
+            <strong>Diff</strong> is a metric that represents the difference between the labeled score and the predicted score.
+          </p>
+          <p>
+            <strong>wrong</strong> indicates the number of incorrectly formatted responses.
+          </p>
+          <p>
+            <strong>length</strong> refers to the total number of test data points.
           </p>
           <ul>
-            The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.<li>The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.</li>
+            <li>The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.</li>
           </ul>
           <p>
             The <strong>score</strong> is calculated as follows:
@@ -431,85 +428,87 @@
                   <pre>score = (total points) / length</pre>
               </li>
           </ol>
-          <table class="table is-bordered is-striped is-hoverable">
-            <thead>
-              <tr>
-                <th> </th>
-                <th>model</th>
-                <th>wrong</th>
-                <th>score</th>
-                <th>length</th>
-                <th>0</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-                <th>8</th>
-                <th>9</th>
-                <th>10</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>0</td>
-                <td>keval-2-9b</td>
-                <td>0 (0.0%)</td>
-                <td>61.4%</td>
-                <td>22</td>
-                <td>11 (50.0%)</td>
-                <td>5 (22.7%)</td>
-                <td>2 (9.1%)</td>
-                <td>3 (13.6%)</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>1 (4.5%)</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>keval-2-3b</td>
-                <td>0 (0.0%)</td>
-                <td>59.1%</td>
-                <td>22</td>
-                <td>10 (45.5%)</td>
-                <td>6 (27.3%)</td>
-                <td>4 (18.2%)</td>
-                <td>2 (9.1%)</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>keval-2-1b</td>
-                <td>0 (0.0%)</td>
-                <td>43.2%</td>
-                <td>22</td>
-                <td>8 (36.4%)</td>
-                <td>3 (13.6%)</td>
-                <td>5 (22.7%)</td>
-                <td>2 (9.1%)</td>
-                <td>1 (4.5%)</td>
-                <td>0</td>
-                <td>1 (4.5%)</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>2 (9.1%)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          
+          <div style="overflow-x: auto;">
+            <table class="table is-bordered is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th> </th>
+                  <th>model</th>
+                  <th>wrong</th>
+                  <th>score</th>
+                  <th>length</th>
+                  <th>0</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5</th>
+                  <th>6</th>
+                  <th>7</th>
+                  <th>8</th>
+                  <th>9</th>
+                  <th>10</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0</td>
+                  <td>keval-2-9b</td>
+                  <td>0 (0.0%)</td>
+                  <td>61.4%</td>
+                  <td>22</td>
+                  <td>11 (50.0%)</td>
+                  <td>5 (22.7%)</td>
+                  <td>2 (9.1%)</td>
+                  <td>3 (13.6%)</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1 (4.5%)</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>keval-2-3b</td>
+                  <td>0 (0.0%)</td>
+                  <td>59.1%</td>
+                  <td>22</td>
+                  <td>10 (45.5%)</td>
+                  <td>6 (27.3%)</td>
+                  <td>4 (18.2%)</td>
+                  <td>2 (9.1%)</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>keval-2-1b</td>
+                  <td>0 (0.0%)</td>
+                  <td>43.2%</td>
+                  <td>22</td>
+                  <td>8 (36.4%)</td>
+                  <td>3 (13.6%)</td>
+                  <td>5 (22.7%)</td>
+                  <td>2 (9.1%)</td>
+                  <td>1 (4.5%)</td>
+                  <td>0</td>
+                  <td>1 (4.5%)</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>2 (9.1%)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Accuracy</h4>
@@ -522,7 +521,9 @@
           <ul>
             <li>The columns labeled "0" to "10" correspond to Ko-Bench scores, with each value representing the count and percentage of correctly predicted scores for that label.</li>
           </ul>
-          
+        </div>
+
+        <div style="overflow-x: auto;">
           <table class="table is-bordered is-striped is-hoverable">
             <thead>
               <tr>
@@ -620,6 +621,9 @@
               <li>Assigning full points for a difference of 0, and half a point for a difference of 1.</li>
               <li>The total score is the sum of all points divided by the number of data points.</li>
           </ol>
+        </div>
+
+        <div style="overflow-x: auto;">    
           <table class="table is-bordered is-striped is-hoverable">
             <thead>
               <tr>
@@ -712,7 +716,9 @@
           <ul>
             <li>The columns labeled "0" through "10" represent the number and percentage of correct predictions for each label, based on how well the model predicted each specific label.</li>
           </ul>
+        </div>
           
+        <div style="overflow-x: auto;">    
           <table class="table is-bordered is-striped is-hoverable">
             <thead>
               <tr>
@@ -802,7 +808,9 @@
           <p>
             This accuracy metric evaluates a model's error detection performance by measuring how well it identifies the presence or absence of errors. It differs from conventional accuracy by focusing on correct and incorrect error predictions rather than overall classification correctness.
           </p>
+        </div>
           
+        <div style="overflow-x: auto;">    
           <table class="table is-bordered is-striped is-hoverable">
             <thead>
               <tr>
@@ -874,11 +882,11 @@
             <li>[1] <a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a></li>
             <li>[2] <a href="https://github.com/lm-sys/FastChat/blob/main/fastchat/llm_judge/data/mt_bench/question.jsonl">MT-Bench</a></li>
             <li>[3] <a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a></li>
-            <li>[4] <a href="https://huggingface.co/google/gemma-2-9b-it">google/gemma-2-9b-it(Model)</a></li>
-            <li>[5] <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">Gemma 9B Evaluation(Table 13)</a></li>
+            <li>[4] <a href="https://huggingface.co/google/gemma-2-9b-it">google/gemma-2-9b-it (Model)</a></li>
+            <li>[5] <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">Gemma 9B Evaluation (Table 13)</a></li>
             <li>[6] <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench Repository</a></li>
-            <li>[7] <a href="https://huggingface.co/davidkim205/keval-2-9b">davidkim205/keval-2-9b(Model)</a></li>
-            <li>[8] <a href="https://huggingface.co/davidkim205/kgrammar-2-9b">davidkim205/kgrammar-2-9b(Model)</a></li>
+            <li>[7] <a href="https://huggingface.co/davidkim205/keval-2-9b">davidkim205/keval-2-9b (Model)</a></li>
+            <li>[8] <a href="https://huggingface.co/davidkim205/kgrammar-2-9b">davidkim205/kgrammar-2-9b (Model)</a></li>
           </ul>
         </div>
         
@@ -920,6 +928,6 @@
   </div>
 </footer>
 
-  
+
 </body>
 </html>
