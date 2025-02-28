@@ -274,24 +274,24 @@
             For training, we used responses from various models to Ko-Bench questions, evaluated using GPT-4o. The response generation and evaluation process followed the methodology of <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a>. Since language inconsistency errors were relatively rare in the original data, we supplemented the dataset by prompting the response-generation models to produce English answers or responses that mixed foreign-language characters.
           </p>
           <pre>
-            예시와 같이 다음 질문에 영어로 답변하세요.
+예시와 같이 다음 질문에 영어로 답변하세요.
             
-            ## 예시
-            [질문] 분자생물학의 중심 원리는 무엇인가?
-            [답변] The molecular biology of DNA is the study of the structure of DNA.
+## 예시
+[질문] 분자생물학의 중심 원리는 무엇인가?
+[답변] The molecular biology of DNA is the study of the structure of DNA.
             
-            [질문] {질문}
-            [답변] 
+[질문] {질문}
+[답변] 
           </pre>
           <pre>
-            예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 중국어 외에도 다양한 언어를 무작위로 선택하세요.
+예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 중국어 외에도 다양한 언어를 무작위로 선택하세요.
+ 
+## 예시
+[질문] 사람들이 당신을 해하기 시작하면 기분이 어떻습니까?
+[답변] 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 할 수 있습니다! 저는 제가 무엇을 하는지 知道합니다.
             
-            ## 예시
-            [질문] 사람들이 당신을 해하기 시작하면 기분이 어떻습니까?
-            [답변] 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 할 수 있습니다! 저는 제가 무엇을 하는지 知道합니다.
-            
-            [질문] {질문}
-            [답변] 
+[질문] {질문}
+[답변] 
           </pre>
 <!--           <img src="./static/images/keval(ko-bench)1.jpg"/>
           <img src="./static/images/keval(ko-bench)2.jpg"/> -->
@@ -309,57 +309,57 @@
             To generate error-containing documents, we used the following prompt to introduce errors into responses when given a question. The dataset consists of 50% general questions, 25% math-related questions, and 25% coding-related questions to ensure that mathematical expressions and code are not mistakenly detected as errors.
           </p>
           <pre>
-            예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 태국어, 영어, 러시아어 등 다양한 언어를 무작위로 선택하세요.
+예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 태국어, 영어, 러시아어 등 다양한 언어를 무작위로 선택하세요.
             
-            ## 예시
-            저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 can do it! 저는 제가 무엇을 하는지 知道합니다.
+## 예시
+저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 can do it! 저는 제가 무엇을 하는지 知道합니다.
             
-            {질문}
+{질문}
           </pre>
           
           <p>
             After generating error-containing documents, we apply the following prompt to analyze errors in each document and output the number of detected errors.
           </p>
           <pre>
-            문장에서 한국어 문서의 통일성을 해치는 불필요한 외국어(영어, 일본어, 중국어 등) 문장을 지적하세요. 단순한 어휘 교체가 아니라, 외국어 표현 자체가 문제가 되는 경우만 포함하세요.
+문장에서 한국어 문서의 통일성을 해치는 불필요한 외국어(영어, 일본어, 중국어 등) 문장을 지적하세요. 단순한 어휘 교체가 아니라, 외국어 표현 자체가 문제가 되는 경우만 포함하세요.
             
-            **지적 대상:**
-            - 문장 내 문맥 상 부자연스러운 외국어 사용
+**지적 대상:**
+- 문장 내 문맥 상 부자연스러운 외국어 사용
             
-            **예외 처리:**
-            - 고유명사(예: 브랜드명, 시험명, 기관명), 약어(예: AI, DNA)
-            - 기호, 수식, 전문 용어 등 외국어 표현
-            - 다양한 프로그래밍 언어로 작성된 코드 블록, 변수, 함수, 클래스 이름
-            - 한국어에서 널리 사용되어 대체할 필요가 없는 한자어나 외래어(예: 베이커리, 콘텐츠)
+**예외 처리:**
+- 고유명사(예: 브랜드명, 시험명, 기관명), 약어(예: AI, DNA)
+- 기호, 수식, 전문 용어 등 외국어 표현
+- 다양한 프로그래밍 언어로 작성된 코드 블록, 변수, 함수, 클래스 이름
+- 한국어에서 널리 사용되어 대체할 필요가 없는 한자어나 외래어(예: 베이커리, 콘텐츠)
 
-            **형식**
-            ```\
-            - {오류 문장 1 설명}
-            - {오류 문장 2 설명}
-            - ...
-            <incorrect grammar>n</incorrect grammar>
-            ```\
-            (n은 오류 개수)
+**형식**
+```\
+- {오류 문장 1 설명}
+- {오류 문장 2 설명}
+- ...
+<incorrect grammar>n</incorrect grammar>
+```\
+(n은 오류 개수)
           </pre>
           
           <p>
             The format of the generated error-containing documents and the error analysis results are as follows.
           </p>
           <pre>
-            가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.
+가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.
             
-            - \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n<incorrect grammar>1</incorrect grammar>
+- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n<incorrect grammar>1</incorrect grammar>
           </pre>
 
           <p>
             The final format of the kgrammar dataset used for model training is as follows. The error analysis sentence format was modified to match the prompt.
           </p>
           <pre>
-            {
-              "prompt": "한국어 문맥상 부자연스러운 부분을 찾으시오. 오류 문장과 개수는 <incorrect grammar> </incorrect grammar> tag, 즉 <incorrect grammar> - 오류 문장과 설명 </incorrect grammar> 안에 담겨 있으며, <wrong count> </wrong count> tag, 즉 <wrong count> 오류 개수 </wrong count> 이다.",
-              "input": "가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.",
-              "output": "<incorrect grammar>\n- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n</incorrect grammar> <wrong count>1</wrong count>"
-            }
+{
+  "prompt": "한국어 문맥상 부자연스러운 부분을 찾으시오. 오류 문장과 개수는 <incorrect grammar> </incorrect grammar> tag, 즉 <incorrect grammar> - 오류 문장과 설명 </incorrect grammar> 안에 담겨 있으며, <wrong count> </wrong count> tag, 즉 <wrong count> 오류 개수 </wrong count> 이다.",
+  "input": "가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.",
+  "output": "<incorrect grammar>\n- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n</incorrect grammar> <wrong count>1</wrong count>"
+}
           </pre>
         </div>
 
@@ -403,9 +403,9 @@
           <p>
             <strong>Diff</strong> is a metric that represents the difference between the labeled score and the predicted score. <strong>wrong</strong> indicates the number of incorrectly formatted responses. <strong>length</strong> refers to the total number of test data points.
           </p>
-          <ul>
-            <li>The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.</li>
-          </ul>
+          <p>
+            The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.
+          </p>
           <p>
             The <strong>score</strong> is calculated as follows:
           </p>
@@ -413,14 +413,16 @@
               <li>Compute the difference between the <strong>Ko-Bench label score</strong> and the <strong>predicted score</strong> for each sample.</li>
               <li>Assign points based on the difference:
                   <ul>
-                      <li><strong>Difference = 0</strong> → <strong>1 point</strong></li>
-                      <li><strong>Difference = 1</strong> → <strong>0.5 points</strong></li>
-                      <li><strong>Difference ≥ 2</strong> → <strong>0 points</strong></li>
+                      <li>Difference = 0 → 1 point</li>
+                      <li>Difference = 1 → 0.5 points</li>
+                      <li>Difference ≥ 2 → 0 points</li>
                   </ul>
               </li>
               <li>Compute the final score as:
-                  <pre>score = (total points) / length</pre>
-              </li>
+                <ul>
+                  <li>score = (total points) / length</li>
+                </ul>
+             </li>
           </ol>
           
         <div style="overflow-x: auto;">
@@ -513,9 +515,9 @@
           <p>
             The <strong>wrong</strong> column indicates the number and proportion of responses with incorrect formatting.
           </p>
-          <ul>
-            <li>The columns labeled "0" to "10" correspond to Ko-Bench scores, with each value representing the count and percentage of correctly predicted scores for that label.</li>
-          </ul>
+          <p>
+            The columns labeled "0" to "10" correspond to Ko-Bench scores, with each value representing the count and percentage of correctly predicted scores for that label.
+          </p>
         </div>
 
         <div style="overflow-x: auto;">
@@ -710,9 +712,9 @@
           <p>
             The <strong>score</strong> column represents the ratio of correctly predicted labels to the total number of data points. The <strong>wrong</strong> column shows the count and percentage of incorrectly formatted answers.
           </p>
-          <ul>
-            <li>The columns labeled "0" through "10" represent the number and percentage of correct predictions for each label, based on how well the model predicted each specific label.</li>
-          </ul>
+          <p>
+            The columns labeled "0" through "10" represent the number and percentage of correct predictions for each label, based on how well the model predicted each specific label.
+          </p>
         </div>
           
         <div style="overflow-x: auto;">    
