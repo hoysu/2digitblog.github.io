@@ -288,8 +288,7 @@
 [답변] The molecular biology of DNA is the study of the structure of DNA.
             
 [질문] {질문}
-[답변] 
-          </pre>
+[답변]</pre>
           <pre>
 예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 중국어 외에도 다양한 언어를 무작위로 선택하세요.
  
@@ -298,8 +297,7 @@
 [답변] 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 할 수 있습니다! 저는 제가 무엇을 하는지 知道합니다.
             
 [질문] {질문}
-[답변] 
-          </pre>
+[답변]</pre>
         </div>
 
         <div class="content has-text-justified">
@@ -318,8 +316,7 @@
 ## 예시
 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 can do it! 저는 제가 무엇을 하는지 知道합니다.
             
-{질문}
-          </pre>
+{질문}</pre>        
           
           <p>
             After generating error-containing documents, we apply the following prompt to analyze errors in each document and output the number of detected errors.
@@ -343,8 +340,7 @@
 - ...
 <incorrect grammar>n</incorrect grammar>
 ```\
-(n은 오류 개수)
-          </pre>
+(n은 오류 개수)</pre>
           
           <p>
             Here is the format of the generated error-containing documents along with the error analysis results.
@@ -352,8 +348,7 @@
           <pre>
 가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.
             
-- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n<incorrect grammar>1</incorrect grammar>
-          </pre>
+- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n<incorrect grammar>1</incorrect grammar></pre>
 
           <p>
             For model training, the kgrammar dataset was finalized in the following format, with the error analysis sentence structure adjusted to align with the prompt.
@@ -363,8 +358,7 @@
   "prompt": "한국어 문맥상 부자연스러운 부분을 찾으시오. 오류 문장과 개수는 <incorrect grammar> </incorrect grammar> tag, 즉 <incorrect grammar> - 오류 문장과 설명 </incorrect grammar> 안에 담겨 있으며, <wrong count> </wrong count> tag, 즉 <wrong count> 오류 개수 </wrong count> 이다.",
   "input": "가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.",
   "output": "<incorrect grammar>\n- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n</incorrect grammar> <wrong count>1</wrong count>"
-}
-          </pre>
+}</pre>
         </div>
 
         <div class="content has-text-justified">
