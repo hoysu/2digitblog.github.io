@@ -202,20 +202,21 @@
         
         <div class="content has-text-justified">
           <p>
-            AI model evaluation has traditionally relied on benchmarks composed of question-answer pairs from specific domains, such as ARC and Hellaswag. However, benchmark scores often fail to fully reflect human preference for AI-generated responses. On the other hand, manual evaluation by humans is time-consuming and expensive.
+            Evaluating AI models has traditionally relied on domain-specific benchmarks like ARC and Hellaswag, which use question-answer pairs. However, these benchmarks often fail to capture human preference for AI-generated responses. While human evaluation provides more accurate assessments, it is costly and time-consuming.
           </p>
           <p>
-            Additionally, evaluating Korean language models presents extra challenges compared to other languages. Most publicly available benchmarks are designed in English, and there is a severe lack of Korean-specific benchmarks. While translating English datasets into Korean is an option, simple translation does not adequately capture the unique characteristics of the Korean language.
+            Korean language models face additional challenges. Most existing benchmarks are designed for English, and Korean-specific datasets are scarce. Translating English datasets into Korean is an option, but simple translation fails to reflect the nuances of the Korean language.
           </p>
           <p>
-            keval overcomes these limitations by evaluating models using the <a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a> approach with the <a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a> dataset.
+            <strong>keval</strong> addresses these issues through the <strong><a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a></strong> approach, using the <strong><a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a></strong> dataset.
           </p>
+          <ul>
+            <li><strong>LLM-as-a-Judge</strong>: A method that utilizes large language models (LLMs) to evaluate AI models efficiently. It reduces time and cost compared to human evaluation while providing a more comprehensive assessment beyond traditional benchmarks.</li>
+            <li><strong>Ko-Bench</strong>: An adaptation of MT-Bench designed specifically for Korean. By incorporating Korean linguistic, cultural, and geographical contexts, Ko-Bench ensures more precise evaluation of an AI model’s ability to understand and generate Korean.</li>
+          </ul>
           <p>
-            LLM-as-a-Judge is an effective evaluation method that leverages LLMs to assess AI models. It is significantly more efficient in terms of time and cost compared to human evaluation, while also allowing for a more comprehensive assessment of AI capabilities beyond what traditional benchmarks offer.
+            Through this approach, keval provides a more effective and scalable solution for evaluating Korean AI models.
           </p>
-          <p>
-            Ko-Bench is a dataset that adapts <a href="https://github.com/lm-sys/FastChat/blob/main/fastchat/llm_judge/data/mt_bench/question.jsonl">MT-Bench</a> to better align with the characteristics of the Korean language. By incorporating Korean linguistic, cultural, and geographical contexts, Ko-Bench enables a more precise evaluation of an AI model’s understanding and generation capabilities in Korean.
-          </p>         
         </div>
         
       </div>
@@ -232,11 +233,14 @@
         
         <div class="content has-text-justified">
           <p>
-            When evaluating AI's responses, it's important not only to assess whether the answer is appropriate, accurate, and useful for the question, but also to check if it is grammatically correct. In keval, these two tasks are handled by two separate models:
+            keval consists of two distinct models, <strong>keval</strong> and <strong>kgrammar</strong>, each designed for a different task.
+          </p>
+          <p>
+            When evaluating AI-generated responses, it is crucial not only to determine whether an answer is appropriate, accurate, and useful but also to assess its grammatical correctness. To address these aspects separately, keval uses two specialized models:
           </p>
           <ul>
-            <li><strong>keval</strong>: A model that scores whether the answer is appropriate for the question.</li>
-            <li><strong>kgrammar</strong>: A model that detects grammatical errors in the answer.</li>
+            <li><strong>keval</strong>: A model that evaluates whether a response is relevant and appropriate for the given question.</li>
+            <li><strong>kgrammar</strong>: A model that identifies grammatical errors in the response, ensuring linguistic accuracy.</li>
           </ul>
         </div>
 
@@ -254,10 +258,10 @@
         
         <div class="content has-text-justified">
           <p>
-            keval models are built upon Google's <a href="https://huggingface.co/google/gemma-2-9b-it">Gemma-2-9b-it</a>.
+            keval models are built on <strong><a href="https://huggingface.co/google/gemma-2-9b-it">Gemma-2-9b-it</a></strong>, a model known for its strong performance in text generation tasks. Gemma-2 was selected not only for its capabilities in areas like question answering, summarization, and reasoning but also for its commercially-friendly license, which allows for innovation sharing and AI commercialization.
           </p>
           <p>
-            Gemma-2 was chosen for its strong performance in text generation tasks and its commercial potential, thanks to its commercially-friendly license that allows for the sharing of innovations and the commercialization of AI models. These models are particularly well-suited for a variety of tasks, including question answering, summarization, and reasoning. Among the Gemma-2 models, the 9B model demonstrates <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">exceptional performance</a> compared to other models of similar size. Their relatively small size enhances their versatility, making them ideal for deployment in resource-constrained environments such as laptops, desktops, or even cloud-based systems.
+            Among the Gemma-2 models, the 9B variant demonstrates <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">exceptional performance</a> relative to other models of similar size. Despite its power, its relatively small size makes it highly versatile, enabling deployment in resource-constrained environments such as laptops, desktops, and cloud-based systems.
           </p>
         </div>
 
@@ -268,10 +272,13 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">keval (Ko-Bench)</h4>
           <p>
-            While AI models rarely respond in Korean to English questions, they occasionally answer in English when given Korean prompts. Sometimes, a response appears to be in Korean but contains a single foreign-language word. To prevent models from mistakenly receiving high scores despite such language inconsistencies, Ko-Bench introduces a 0-point score in addition to the 1-10 scale used in MT-Bench.
+            AI models typically respond in the same language as the input, but inconsistencies can occur. While they rarely answer in Korean when prompted in English, they sometimes generate English responses to Korean prompts. In some cases, a response appears to be in Korean but includes a single foreign-language word. These inconsistencies can lead to models receiving inflated scores in evaluations. To address this, Ko-Bench introduces a <strong>0-point score</strong> alongside the <strong>1-10 scale</strong> used in MT-Bench, ensuring that such errors are properly penalized.
           </p>
           <p>
-            For training, we used responses from various models to Ko-Bench questions, evaluated using GPT-4o. The response generation and evaluation process followed the methodology of <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a>. Since language inconsistency errors were relatively rare in the original data, we supplemented the dataset by prompting the response-generation models to produce English answers or responses that mixed foreign-language characters.
+            For training, we collected responses from various models to Ko-Bench questions and evaluated them using GPT-4o. The response generation and evaluation process followed the methodology of <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a>.
+          </p>
+          <p>
+            Since language inconsistency errors were relatively rare in the original dataset, we augmented the data by prompting models to generate responses in English or mix foreign-language characters, ensuring a more comprehensive evaluation. Below is the prompt used in this process.
           </p>
           <pre>
 예시와 같이 다음 질문에 영어로 답변하세요.
@@ -293,8 +300,6 @@
 [질문] {질문}
 [답변] 
           </pre>
-<!--           <img src="./static/images/keval(ko-bench)1.jpg"/>
-          <img src="./static/images/keval(ko-bench)2.jpg"/> -->
         </div>
 
         <div class="content has-text-justified">
@@ -310,7 +315,6 @@
           </p>
           <pre>
 예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 태국어, 영어, 러시아어 등 다양한 언어를 무작위로 선택하세요.
-            
 ## 예시
 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 can do it! 저는 제가 무엇을 하는지 知道합니다.
             
@@ -322,10 +326,10 @@
           </p>
           <pre>
 문장에서 한국어 문서의 통일성을 해치는 불필요한 외국어(영어, 일본어, 중국어 등) 문장을 지적하세요. 단순한 어휘 교체가 아니라, 외국어 표현 자체가 문제가 되는 경우만 포함하세요.
-            
+
 **지적 대상:**
 - 문장 내 문맥 상 부자연스러운 외국어 사용
-            
+
 **예외 처리:**
 - 고유명사(예: 브랜드명, 시험명, 기관명), 약어(예: AI, DNA)
 - 기호, 수식, 전문 용어 등 외국어 표현
@@ -343,7 +347,7 @@
           </pre>
           
           <p>
-            The format of the generated error-containing documents and the error analysis results are as follows.
+            Here is the format of the generated error-containing documents along with the error analysis results.
           </p>
           <pre>
 가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.
@@ -352,7 +356,7 @@
           </pre>
 
           <p>
-            The final format of the kgrammar dataset used for model training is as follows. The error analysis sentence format was modified to match the prompt.
+            For model training, the kgrammar dataset was finalized in the following format, with the error analysis sentence structure adjusted to align with the prompt.
           </p>
           <pre>
 {
@@ -366,13 +370,16 @@
         <div class="content has-text-justified">
           <h3 class="title is-4 has-text-left">Fine-Tuning</h3>
           <p>
-            The development of keval utilized both Supervised Fine-Tuning (SFT) and Direct Preference Optimization (DPO) techniques.
+            The development of keval incorporated both <strong>Supervised Fine-Tuning (SFT)</strong> and <strong>Direct Preference Optimization (DPO)</strong> to enhance its evaluation accuracy and alignment with human judgment.
           </p>
           <p>
-            SFT is a method that trains a model using labeled data, enabling it to learn correct responses for given inputs and improve its performance on specific tasks. keval underwent additional training through SFT using a Korean evaluation dataset, enhancing its evaluation capabilities.
+            SFT is a technique that trains a model using labeled data, allowing it to learn correct responses for given inputs and improve performance on specific tasks. To strengthen keval’s evaluation capabilities, we conducted additional SFT using a Korean evaluation dataset, ensuring the model could better assess responses in a Korean-language context.
           </p>
           <p>
-            DPO is a technique that improves model responses by learning user preferences. Instead of merely learning correct answers, DPO incorporates preference learning through relative comparisons between responses. By applying DPO, keval was optimized to make better judgments, leading to improved evaluation accuracy.
+            DPO further refines the model by optimizing responses based on user preferences. Instead of simply learning correct answers, it enables the model to distinguish between higher- and lower-quality responses through relative comparisons. By applying DPO, keval was further optimized to make more reliable and human-like judgments in its evaluations.
+          </p>
+          <p>
+            By integrating SFT and DPO, keval demonstrated enhanced alignment with expert evaluations, reducing discrepancies between AI and human-assigned scores. This combination ensures that keval not only understands correct answers but also makes more human-like judgments when evaluating AI-generated content.
           </p>
         </div>
 
@@ -401,29 +408,41 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Diff</h4>
           <p>
-            <strong>Diff</strong> is a metric that represents the difference between the labeled score and the predicted score. <strong>wrong</strong> indicates the number of incorrectly formatted responses. <strong>length</strong> refers to the total number of test data points.
+            <strong>Diff</strong> is a metric that represents the difference between the labeled score and the predicted score.
           </p>
+          <ul>
+            <li>wrong: A metric that indicates the number of incorrectly formatted responses.</li>
+            <li>length: A metric that refers to the total number of test data points.</li>
+          </ul>
           <p>
             The column names (0–10) represent the difference (n) between the labeled score and the predicted score, with the corresponding values showing the count and proportion of samples with that difference.
           </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <h5 class="title is-6 has-text-left">Score Calculation</h5>
           <p>
-            The <strong>score</strong> is calculated as follows:
+            The score is calculated based on how closely the predicted score matches the labeled score:
           </p>
           <ol>
-              <li>Compute the difference between the <strong>Ko-Bench label score</strong> and the <strong>predicted score</strong> for each sample.</li>
+              <li>Compute the difference between the Ko-Bench label score and the predicted score for each sample.</li>
               <li>Assign points based on the difference:
                   <ul>
-                      <li>Difference = 0 → 1 point</li>
-                      <li>Difference = 1 → 0.5 points</li>
-                      <li>Difference ≥ 2 → 0 points</li>
+                      <li>A difference of <strong>0</strong> → <strong>1 point</strong></li>
+                      <li>A difference of <strong>1</strong> → <strong>0.5 points</strong></li>
+                      <li>Any other difference → <strong>0 points</strong></li>
                   </ul>
               </li>
               <li>Compute the final score as:
                 <ul>
-                  <li>score = (total points) / length</li>
+                  <li><strong>score</strong> = (total points) / (length)</li>
                 </ul>
              </li>
           </ol>
+          <p>
+            This metric provides a normalized measure of the model’s evaluation accuracy, with higher scores indicating better alignment with human-labeled judgments.
+          </p>
+        </div>
           
         <div style="overflow-x: auto;">
           <table class="table is-bordered is-striped is-hoverable">
@@ -510,13 +529,14 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Accuracy</h4>
           <p>
-            The <strong>score</strong> column represents the proportion of correctly predicted labels, calculated as the number of correct predictions divided by the total dataset size.
+            <strong>Accuracy</strong> measures the ratio of correct predictions to the total predictions.
           </p>
+          <ul>
+            <li>score: A metric represents the proportion of correctly predicted labels, calculated as the number of correct predictions divided by the total dataset size.</li>
+            <li>wrong: A metric indicates the number and proportion of responses with incorrect formatting.</li>
+          </ul>
           <p>
-            The <strong>wrong</strong> column indicates the number and proportion of responses with incorrect formatting.
-          </p>
-          <p>
-            The columns labeled "0" to "10" correspond to Ko-Bench scores, with each value representing the count and percentage of correctly predicted scores for that label.
+            The column names (0–10) correspond to Ko-Bench scores, with each value representing the count and percentage of correctly predicted scores for that label. A higher score indicates a greater alignment between the model's predictions and the ground truth labels.
           </p>
         </div>
 
@@ -609,10 +629,21 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Diff</h4>
           <p>
-            The <strong>diff</strong> refers to the difference between the label scores and predicted scores, represented as a score. The <strong>wrong</strong> count refers to the number of incorrect answers that do not match the required format, while <strong>length</strong> represents the total number of test data. Other columns containing numbers indicate the count and percentage of differences between label and predicted scores for each value.
+            <strong>Diff</strong> refers to the difference between the label scores and predicted scores, represented as a score. Unlike keval, which calculates it based on Ko-Bench scores ranging from 0 to 10, kgrammar uses the number of detected errors(wrong count).
           </p>
+          <ol>
+              <li>wrong: A metric that indicates the number of incorrectly formatted responses.</li>
+              <li>length: A metric that refers to the total number of test data points.</li>
+          </ol>
           <p>
-            The <strong>score</strong> is calculated by:
+            The "wrong" column in the table is different from the "wrong count" used in kgrammar. "Wrong" refers to formatting errors, while "wrong count" includes all errors present in a sentence. Other columns containing numbers indicate the count and percentage of differences between label and predicted scores for each value.
+          </p>
+        </div>
+
+        <div class="content has-text-justified">
+          <h5 class="title is-6 has-text-left">Score Calculation</h5>
+          <p>
+            The score is calculated based on how closely the predicted wrong count matches the labeled wrong count:
           </p>
           <ol>
               <li>Calculating the difference between the label and predicted value inside the <wrong count> tag for each pair.</li>
@@ -710,10 +741,14 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Accuracy</h4>
           <p>
-            The <strong>score</strong> column represents the ratio of correctly predicted labels to the total number of data points. The <strong>wrong</strong> column shows the count and percentage of incorrectly formatted answers.
+            <strong>Accuracy</strong> measures the ratio of correct predictions to the total predictions.
           </p>
+          <ul>
+            <li>score: A metric represents the proportion of correctly predicted labels, calculated as the number of correct predictions divided by the total dataset size.</li>
+            <li>wrong: A metric indicates the number and proportion of responses with incorrect formatting.</li>
+          </ul>
           <p>
-            The columns labeled "0" through "10" represent the number and percentage of correct predictions for each label, based on how well the model predicted each specific label.
+            The column names (0–11) correspond to the wrong count labels in the kgrammar dataset, with each value representing the count and percentage of correctly predicted scores for that label. A higher score indicates a greater alignment between the model's predictions and the ground truth labels.
           </p>
         </div>
           
@@ -806,7 +841,10 @@
         <div class="content has-text-justified">
           <h4 class="title is-5 has-text-left">Error Detection Accuracy</h4>
           <p>
-            This accuracy metric evaluates a model's error detection performance by measuring how well it identifies the presence or absence of errors. It differs from conventional accuracy by focusing on correct and incorrect error predictions rather than overall classification correctness.
+            <strong>Error Detection Accuracy</strong> evaluates a model's error detection performance by measuring how well it identifies the presence or absence of errors. It differs from conventional accuracy by focusing on correct and incorrect error predictions rather than overall classification correctness.
+          </p>
+          <p>
+            The kgrammar models show strong error detection accuracy. The kgrammar-2-9b model performs best, with kgrammar-2-3b and kgrammar-2-1b following closely. This makes them reliable for precise grammatical evaluation.
           </p>
         </div>
           
