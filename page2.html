@@ -338,7 +338,7 @@
 - {오류 문장 1 설명}
 - {오류 문장 2 설명}
 - ...
-<incorrect grammar>n</incorrect grammar>
+&lt;incorrect grammar&gt;n&lt;/incorrect grammar&gt;
 ```\
 (n은 오류 개수)</pre>
           
@@ -348,16 +348,16 @@
           <pre>
 가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.
             
-- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n<incorrect grammar>1</incorrect grammar></pre>
+- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n&lt;incorrect grammar&gt;1&lt;/incorrect grammar&gt;</pre>
 
           <p>
             For model training, the kgrammar dataset was finalized in the following format, with the error analysis sentence structure adjusted to align with the prompt.
           </p>
           <pre>
 {
-  "prompt": "한국어 문맥상 부자연스러운 부분을 찾으시오. 오류 문장과 개수는 <incorrect grammar> </incorrect grammar> tag, 즉 <incorrect grammar> - 오류 문장과 설명 </incorrect grammar> 안에 담겨 있으며, <wrong count> </wrong count> tag, 즉 <wrong count> 오류 개수 </wrong count> 이다.",
+  "prompt": "한국어 문맥상 부자연스러운 부분을 찾으시오. 오류 문장과 개수는 &lt;incorrect grammar&gt; &lt;/incorrect grammar&gt; tag, 즉 &lt;incorrect grammar&gt;- 오류 문장과 설명&lt;/incorrect grammar&gt; 안에 담겨 있으며, &lt;wrong count&gt; &lt;/wrong count&gt; tag, 즉 &lt;wrong count&gt; 오류 개수 &lt;/wrong count&gt; 이다.",
   "input": "가장 적은 S등급을 받은 통신사는 LG유플러스 입니다. 그들의 S등급 지역은 243곳でした. 이는 다른 두 통신사에 비해 적습니다.",
-  "output": "<incorrect grammar>\n- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n</incorrect grammar> <wrong count>1</wrong count>"
+  "output": "&lt;incorrect grammar&gt;\n- \"でした\"는 문장에서 일본어 표현으로, 한국어 문서의 통일성을 해치는 요소입니다.\n&lt;/incorrect grammar&gt; &lt;wrong count&gt;1&lt;/wrong count&gt;"
 }</pre>
         </div>
 
@@ -625,10 +625,10 @@
           <p>
             <strong>Diff</strong> refers to the difference between the label scores and predicted scores, represented as a score. Unlike keval, which calculates it based on Ko-Bench scores ranging from 0 to 10, kgrammar uses the number of detected errors(wrong count).
           </p>
-          <ol>
+          <ul>
               <li>wrong: A metric that indicates the number of incorrectly formatted responses.</li>
               <li>length: A metric that refers to the total number of test data points.</li>
-          </ol>
+          </ul>
           <p>
             The "wrong" column in the table is different from the "wrong count" used in kgrammar. "Wrong" refers to formatting errors, while "wrong count" includes all errors present in a sentence. Other columns containing numbers indicate the count and percentage of differences between label and predicted scores for each value.
           </p>
