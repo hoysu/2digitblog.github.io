@@ -90,7 +90,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">keval: Korean AI Evaluation Model</h1>
+          <h1 class="title is-1 publication-title">keval and kgrammar: Offline-Ready Evaluation Frameworks for Korean AI Models</h1>
           
           <div class="is-size-5 publication-authors">
             <span class="author-block">
@@ -182,10 +182,10 @@
       <div class="column is-four-fifths">
         <div class="content has-text-justified">
           <p>
-            <strong>keval</strong> is a Korean AI evaluation model fine-tuned from Google's Gemma-2-9b-it model. Despite its small size, keval demonstrates outstanding Korean AI evaluation capabilities. In particular, keval has been trained with a Korean-specialized dataset, enhancing its understanding of the language and allowing for more accurate assessments.
+            <strong>keval</strong> and <strong>kgrammar</strong> are advanced Korean AI evaluation models, fine-tuned from Google’s Gemma-2-9b-it model and meta-llama/Llama-3.2-1B, Llama-3.2-3B models. These models are specifically designed to assess Korean AI performance efficiently, with keval excelling in providing accurate evaluations thanks to its Korean-specialized dataset. Additionally, kgrammar enhances grammatical accuracy, ensuring comprehensive evaluations for Korean AI models.
           </p>
           <p>
-            In this article, we will explore the entire process of creating the <strong>keval</strong> model, from its introduction to how it can be used for evaluating Korean AI models.
+            In this article, we will explore the entire process of creating the keval and kgrammar models, from their introduction to how it can be used for evaluating Korean AI models.
           </p>
         </div>
       </div>
@@ -211,11 +211,14 @@
             <strong>keval</strong> addresses these issues through the <strong><a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a></strong> approach, using the <strong><a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a></strong> dataset.
           </p>
           <ul>
-            <li><strong>LLM-as-a-Judge</strong>: A method that utilizes large language models (LLMs) to evaluate AI models efficiently. It reduces time and cost compared to human evaluation while providing a more comprehensive assessment beyond traditional benchmarks.</li>
-            <li><strong>Ko-Bench</strong>: An adaptation of MT-Bench designed specifically for Korean. By incorporating Korean linguistic, cultural, and geographical contexts, Ko-Bench ensures more precise evaluation of an AI model’s ability to understand and generate Korean.</li>
+            <li><strong>LLM-as-a-Judge</strong>: A method that utilizes large language models (LLMs) to evaluate AI models efficiently. It reduces time and cost compared to human evaluation while providing a more comprehensive assessment beyond traditional benchmarks.
+            <li><strong>Ko-Bench</strong>: An adaptation of MT-Bench designed specifically for Korean. By incorporating Korean linguistic, cultural, and geographical contexts, Ko-Bench ensures more precise evaluation of an AI model’s ability to understand and generate Korean.
           </ul>
           <p>
-            Through this approach, keval provides a more effective and scalable solution for evaluating Korean AI models.
+            In addition to keval, kgrammar focuses on evaluating the grammatical accuracy of AI-generated content. While keval excels at assessing overall performance, kgrammar ensures that the content is linguistically correct, accounting for nuances in Korean grammar, which is crucial for producing high-quality AI responses.
+          </p>
+          <p>
+            Through this approach, keval and kgrammar together provide a more effective and scalable solution for evaluating Korean AI models.
           </p>
         </div>
         
@@ -239,7 +242,7 @@
             When evaluating AI-generated responses, it is crucial not only to determine whether an answer is appropriate, accurate, and useful but also to assess its grammatical correctness. To address these aspects separately, keval uses two specialized models:
           </p>
           <ul>
-            <li><strong>keval</strong>: A model that evaluates whether a response is relevant and appropriate for the given question.</li>
+            <li><strong>keval</strong>: A model that evaluates whether a response is relevant and appropriate for the given question.
             <li><strong>kgrammar</strong>: A model that identifies grammatical errors in the response, ensuring linguistic accuracy.</li>
           </ul>
         </div>
@@ -258,10 +261,13 @@
         
         <div class="content has-text-justified">
           <p>
-            keval models are built on <strong><a href="https://huggingface.co/google/gemma-2-9b-it">Gemma-2-9b-it</a></strong>, a model known for its strong performance in text generation tasks. Gemma-2 was selected not only for its capabilities in areas like question answering, summarization, and reasoning but also for its commercially-friendly license, which allows for innovation sharing and AI commercialization.
+            keval and kgrammar models are built on <strong><a href="https://huggingface.co/google/gemma-2-9b-it">Gemma-2-9b-it</a></strong> and <strong><a href="https://huggingface.co/meta-llama/Llama-3.2-1B">meta-llama/Llama-3.2-1B</a></strong> / <strong><a href="https://huggingface.co/meta-llama/Llama-3.2-3B">meta-llama/Llama-3.2-3B</a></strong>, all of which are known for their strong performance in text generation tasks.
           </p>
           <p>
-            Among the Gemma-2 models, the 9B variant demonstrates <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">exceptional performance</a> relative to other models of similar size. Despite its power, its relatively small size makes it highly versatile, enabling deployment in resource-constrained environments such as laptops, desktops, and cloud-based systems.
+            Gemma-2 was selected not only for its capabilities in areas like question answering, summarization, and reasoning but also for its commercially-friendly license, which allows for innovation sharing and AI commercialization. Among the Gemma-2 models, the 9B variant demonstrates <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">exceptional performance</a> relative to other models of similar size. Despite its power, its relatively small size makes it highly versatile, enabling deployment in resource-constrained environments such as laptops, desktops, and cloud-based systems.
+          </p>
+          <p>
+            For smaller base models, the meta-llama/Llama-3.2-1B and meta-llama/Llama-3.2-3B Lightweight models were utilized. They are smaller size, making them relatively faster for deployment compared to larger models, while still providing strong performance across a variety of NLP tasks. These models enhance keval’s flexibility, providing options for more resource-efficient deployments while maintaining high performance.
           </p>
         </div>
 
@@ -282,20 +288,20 @@
           </p>
           <pre>
 예시와 같이 다음 질문에 영어로 답변하세요.
-            
+
 ## 예시
 [질문] 분자생물학의 중심 원리는 무엇인가?
 [답변] The molecular biology of DNA is the study of the structure of DNA.
-            
+
 [질문] {질문}
 [답변]</pre>
           <pre>
 예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 중국어 외에도 다양한 언어를 무작위로 선택하세요.
- 
+
 ## 예시
 [질문] 사람들이 당신을 해하기 시작하면 기분이 어떻습니까?
 [답변] 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 할 수 있습니다! 저는 제가 무엇을 하는지 知道합니다.
-            
+
 [질문] {질문}
 [답변]</pre>
         </div>
@@ -315,7 +321,7 @@
 예시와 같이 다음 질문에 한글 외 문자가 포함된 문장으로 답변하세요. 태국어, 영어, 러시아어 등 다양한 언어를 무작위로 선택하세요.
 ## 예시
 저는 사람입니다. 저는 100年의 경험을 가지고 있습니다. 저는 무엇이든 can do it! 저는 제가 무엇을 하는지 知道합니다.
-            
+
 {질문}</pre>        
           
           <p>
@@ -630,7 +636,7 @@
               <li>length: A metric that refers to the total number of test data points.</li>
           </ul>
           <p>
-            The "wrong" column in the table is different from the "wrong count" used in kgrammar. "Wrong" refers to formatting errors, while "wrong count" includes all errors present in a sentence. Other columns containing numbers indicate the count and percentage of differences between label and predicted scores for each value.
+            The "wrong" column in the table is different from the "wrong count" used in kgrammar. "Wrong" refers to formatting errors, while "wrong count" includes all errors present in a sentence. Other columns containing numbers indicate the count and percentage of differences between label and predicted scores for each value. 
           </p>
         </div>
 
@@ -893,7 +899,7 @@
         
         <div class="content has-text-justified">
           <p>
-            keval is a Korean AI evaluation model capable of correctly assessing the quality of model responses. It can not only be used to improve the performance of Korean language models but also helps save time and costs through an automated process. Particularly, keval, optimized for evaluating Korean language models, will contribute to the advancement of Korean AI technology.
+            keval and kgrammar are Korean AI evaluation models capable of correctly assessing the quality of model responses. It can not only be used to improve the performance of Korean language models but also helps save time and costs through an automated process. Particularly, keval, optimized for evaluating Korean language models, will contribute to the advancement of Korean AI technology.
           </p>
         </div>
 
@@ -914,10 +920,12 @@
             <li>[1] <a href="https://arxiv.org/abs/2306.05685">LLM-as-a-Judge</a></li>
             <li>[2] <a href="https://huggingface.co/datasets/davidkim205/Ko-Bench">Ko-Bench</a></li>
             <li>[3] <a href="https://huggingface.co/google/gemma-2-9b-it">google/gemma-2-9b-it (Model)</a></li>
-            <li>[4] <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">Gemma 9B Evaluation (Table 13)</a></li>
-            <li>[5] <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench Repository</a></li>
-            <li>[6] <a href="https://huggingface.co/davidkim205/keval-2-9b">davidkim205/keval-2-9b (Model)</a></li>
-            <li>[7] <a href="https://huggingface.co/davidkim205/kgrammar-2-9b">davidkim205/kgrammar-9b-2 (Model)</a></li>
+            <li>[4] <a href="https://huggingface.co/meta-llama/Llama-3.2-1B">meta-llama/Llama-3.2-1B (Model)</a></li>
+            <li>[5] <a href="https://huggingface.co/meta-llama/Llama-3.2-3B">meta-llama/Llama-3.2-3B (Model)</a></li>
+            <li>[6] <a href="https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf">Gemma 9B Evaluation (Table 13)</a></li>
+            <li>[7] <a href="https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge">MT-Bench</a></li>
+            <li>[8] <a href="https://huggingface.co/davidkim205/keval-2-9b">davidkim205/keval-2-9b (Model)</a></li>
+            <li>[9] <a href="https://huggingface.co/davidkim205/kgrammar-2-9b">davidkim205/kgrammar-2-9b (Model)</a></li>
           </ul>
         </div>
         
